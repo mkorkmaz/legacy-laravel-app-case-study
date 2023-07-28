@@ -1,7 +1,7 @@
 ## Legacy Laravel Currency Api
 
 - Elimizde, uzun zaman önce bir firmaya, Laravel ile yazdırılmış eski bir api uygulamamız var. 
-- Başka bir uygulama tarafından bu api uygulamasının veritabanına düzenli verisi basılmaktadır.
+- Başka bir uygulama tarafından bu api uygulamasının veritabanına düzenli olarak veri basılmaktadır.
 - Uygulamayı yazan firmayla çalışmaya uzun süre önce son verilmiş, sistem kendi kendine çalışır halde kullanılmaktadır.
 - Firmamız var olan bu api uygulamasını güncellenip modernize edilerek sadece veri listeleme değil, veri girişinin de yapılmasına karar verdi.
 
@@ -44,9 +44,9 @@ Bu dokümantasyonu güncelleyerek API'ye şu özelliklerin kazandırmanız bekle
 - Var olan dokümanstasyonu isimlendirme konvensiyonuna göre elden geçirmek
 - Kullanıcı login endpoint'lerini dokümante etmek.
 - Yeni bir döviz kuru tanımlamak, var olanları güncellemek için endpoint'leri dokümante etmek.
-- Var olan bir döviz kuru için ilgili tarihlerdeki değerlerinin girişi, güncellenmesi ve gerektiğinde silinebilmesi için gerkli endpointleri dokümante etmek.
-- Basit bir kur hesaplama entpoint'i oluşturmanız beklenmektedir.
-- Dokümantasyonu hazırlarken REST api guide'na uygun hareket etmeniz beklenmektedir.
+- Var olan bir döviz kuru için ilgili tarihlerdeki değerlerinin girişi, güncellenmesi ve gerektiğinde silinebilmesi için gerekli endpointleri dokümante etmek.
+- Basit bir kur hesaplama entpoint'i oluşturmak.
+- Dokümantasyonu hazırlarken REST Api Guide'na uygun hareket etmek.
 
 
 ### 3. Uygulamayı Hexagonal Mimari(HA)'ye göre refaktör etmek [Opsiyonel]
@@ -54,8 +54,8 @@ Bu dokümantasyonu güncelleyerek API'ye şu özelliklerin kazandırmanız bekle
 Uygulama içinde business logic gerek controller method'larına gerek veritabanı tablo tanımlarına sızmış durumdadır.
 Bu bağlamda:
 
-- Domain kodunu implemantasyondan detaylarından izole ederek HA'ya uygun olarak refaktör etmeniz beklenmektedir.
-- Laravel'in ORM oalrak kullandığı Eloquent bir Active Records uygulaması olduğundan HA'ya uygun refaktör ederken Repository Pattern kullanmanız beklenmektedir.
+- Domain kodunu implemantasyon detaylarından izole ederek HA'ya uygun olarak refaktör etmeniz beklenmektedir.
+- Laravel'in ORM olarak kullandığı Eloquent bir Active Records uygulaması olduğundan HA'ya uygun refaktör ederken Repository Pattern kullanmanız beklenmektedir.
 - Repository methodları içinde Eloquent modellerini kullanmaya devam edebilirsiniz.
 - Açık SQL kodu yazmanız durumunda SQL Style Guide (https://www.sqlstyle.guide/) kullanmanız beklenmektedir.
 - Class, method, attribute vb isimlendirmelerinde DDD perspektifinden yararlanmanız beklenmektedir.
@@ -64,23 +64,21 @@ Bu bağlamda:
 
 Yazmış olduğunuz api dokümantasyonu implamente etmeniz beklenmektedir. Bu bağlamda:
 
-- SOLID, Object Calisthenics ve Defensive Programming prensipleri riayet etmeniz beklenmektedir.
-- Kur hesaplama endpointinde kullanacağız hesaplama aracını ayrı bir servis gibi düşünüp kendine ait bir modül oalrak yazınız.
-- 
+- SOLID, Object Calisthenics ve Defensive Programming prensiplerine riayet etmeniz beklenmektedir.
+- Kur hesaplama endpointinde kullanacağız hesaplama aracını ayrı bir servis gibi düşünüp kendi başına bir modül olarak yazınız.
 
 ### Git commit'leri [Zorunlu]
 
 - Her commit tek bir konuyla ilgili olmalıdır.
 - Her bir feature kodları için tek bir commit kullanılabilir.
-- Commit mesajlarınız Conventional Commits guide'ına uygun olmalıdır. Bu noktada şu cheat sheet'ten faydalanabilirsiniz: https://cheatography.com/albelop/cheat-sheets/conventional-commits/
-- 
+- Commit mesajlarınız Conventional Commits Guide'ına uygun olmalıdır. Bu noktada şu cheat sheet'ten faydalanabilirsiniz: https://cheatography.com/albelop/cheat-sheets/conventional-commits/
 
 ### Yapılması zorunlu olmayan ama olması artı puan kazandıracak konular [Opsiyonel]
 
 - Kur hesaplama modülü için unit test yazmanız.
 - Kur hesaplama modülünü ayrı bir repository'e taşıyıp https://packagist.org üzerinden yayınlanan bir composer paketi haline getirmek. 
-- Yazdığınız kodu Scrutinizer CI https://scrutinizer-ci.com/
-- Yazdığınız kodu klonlamak yerine fork edip uygulamanın son halini Merge Request yapmak.
+- Yazdığınız kodu Scrutinizer CI https://scrutinizer-ci.com/ değerlendirmeye alıp build:passing, coverage ve scrutinizer not badge'leri almak.
+- Yazdığınız kodu klonlamak yerine fork edip uygulamanın son halini Merge Request ile iletmek.
 - Bu guide içindeki yazım ve ifade yanlışlarını, yanlış verilmiş referans ya da komut örneklerini düzeltmek.  
 
 
