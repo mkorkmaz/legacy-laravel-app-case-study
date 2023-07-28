@@ -24,7 +24,7 @@ Uygulamanın user test'lerini http://127.0.0.1:8000/docs adresi üzerinden Api D
 
 ## Sizden beklenenler:
 
-### Değişken, fonksiyon, attribute, class isimlendirmelerinde belli bir konvensiyonu kullanmak
+### 1. Değişken, fonksiyon, attribute, class isimlendirmelerinde belli bir konvensiyonu kullanmak [Zorunlu]
 
 Var olan kod birden çok kişi tarafından değişik zamanlarda yazılmış, güncellenmiştir. 
 Önceden bir konvensiyon belirlenmediğinden uygulama genelinde bir tutarsızlık vardır.
@@ -36,7 +36,7 @@ Bu bağlamda aşağıdaki kurallara göre uygulamayı gözden geçirmeniz, gerek
 - Veritabanı, schema, tablo, kolon, index isimleri snake_case olmalıdır.
 - Url parametreleri, konfigürasyon değerleri gibi isimlendirmelerde kebab-case kullanılmalıdır.
 
-### Openapi dokümantasyonunu düzenlemek
+### 2. Openapi dokümantasyonunu düzenlemek [Zorunlu]
 
 Codebase'de /public/docs altında openapi dokümantasyonu bulunmaktadır. 
 Bu dokümantasyonu güncelleyerek API'ye şu özelliklerin kazandırmanız beklenmektedir:
@@ -49,7 +49,7 @@ Bu dokümantasyonu güncelleyerek API'ye şu özelliklerin kazandırmanız bekle
 - Dokümantasyonu hazırlarken REST api guide'na uygun hareket etmeniz beklenmektedir.
 
 
-### Uygulamayı Hexagonal Mimari(HA)'ye göre refaktör etmek
+### 3. Uygulamayı Hexagonal Mimari(HA)'ye göre refaktör etmek [Opsiyonel]
 
 Uygulama içinde business logic gerek controller method'larına gerek veritabanı tablo tanımlarına sızmış durumdadır.
 Bu bağlamda:
@@ -60,7 +60,7 @@ Bu bağlamda:
 - Açık SQL kodu yazmanız durumunda SQL Style Guide (https://www.sqlstyle.guide/) kullanmanız beklenmektedir.
 - Class, method, attribute vb isimlendirmelerinde DDD perspektifinden yararlanmanız beklenmektedir.
 
-### Güncellenen API dokümantasyonuna göre uygulamayı genişletmek
+### 4. Güncellenen API dokümantasyonuna göre uygulamayı genişletmek [Zorunlu]
 
 Yazmış olduğunuz api dokümantasyonu implamente etmeniz beklenmektedir. Bu bağlamda:
 
@@ -68,14 +68,14 @@ Yazmış olduğunuz api dokümantasyonu implamente etmeniz beklenmektedir. Bu ba
 - Kur hesaplama endpointinde kullanacağız hesaplama aracını ayrı bir servis gibi düşünüp kendine ait bir modül oalrak yazınız.
 - 
 
-### Git commit'leri
+### Git commit'leri [Zorunlu]
 
 - Her commit tek bir konuyla ilgili olmalıdır.
 - Her bir feature kodları için tek bir commit kullanılabilir.
 - Commit mesajlarınız Conventional Commits guide'ına uygun olmalıdır. Bu noktada şu cheat sheet'ten faydalanabilirsiniz: https://cheatography.com/albelop/cheat-sheets/conventional-commits/
 - 
 
-### Yapılması zorunlu olmayan ama olması artı puan kazandıracak konular
+### Yapılması zorunlu olmayan ama olması artı puan kazandıracak konular [Opsiyonel]
 
 - Kur hesaplama modülü için unit test yazmanız.
 - Kur hesaplama modülünü ayrı bir repository'e taşıyıp https://packagist.org üzerinden yayınlanan bir composer paketi haline getirmek. 
