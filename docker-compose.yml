@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+  mysql:
+    image: mysql:8.0.31
+    container_name: legacy-db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: legacy_admin!
+      MYSQL_DATABASE: legacy
+      MYSQL_USER: legacy_user
+      MYSQL_PASSWORD: legacy_pwd!
+    networks:
+      - legacy_net
+volumes:
+  mysql_data:
+networks:
+  legacy_net:
+    driver: "bridge"
