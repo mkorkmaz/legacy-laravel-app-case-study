@@ -22,6 +22,16 @@ docker-compose up komutundan sonra diğer komutları yeni bir terminal penceresi
 
 Uygulamanın user test'lerini http://127.0.0.1:8000/docs adresi üzerinden Api Dokümantasyonu üzerinden yapabilirsiniz.
 
+Uygulama yazılırken Laravel Project dosya/klasör içeriğinde sadece şuralara dokunulmuştur:
+
+```shell
+- ./app/Http/
+- ./app/Models
+- ./database
+- ./public/docs
+- ./routes
+```
+
 ## Sizden beklenenler:
 
 ### 1. Değişken, fonksiyon, attribute, class isimlendirmelerinde belli bir konvensiyonu kullanmak [Zorunlu]
@@ -76,7 +86,8 @@ Yazmış olduğunuz api dokümantasyonu implamente etmeniz beklenmektedir. Bu ba
 ### Yapılması zorunlu olmayan ama olması artı puan kazandıracak konular [Opsiyonel]
 
 - Kur hesaplama modülü için unit test yazmanız.
-- Kur hesaplama modülünü ayrı bir repository'e taşıyıp https://packagist.org üzerinden yayınlanan bir composer paketi haline getirmek. 
+- Kur hesaplama modülünü ayrı bir repository'e taşıyıp https://packagist.org üzerinden yayınlanan bir composer paketi haline getirmek.
+- Psalm, Phpstan gibi static kod analysis tool'larını composer komutu ile çalırış hale getirip kullanmak. 
 - Yazdığınız kodu Scrutinizer CI https://scrutinizer-ci.com/ değerlendirmeye alıp build:passing, coverage ve scrutinizer not badge'leri almak.
 - Yazdığınız kodu klonlamak yerine fork edip uygulamanın son halini Merge Request ile iletmek.
 - Bu guide içindeki yazım ve ifade yanlışlarını, yanlış verilmiş referans ya da komut örneklerini düzeltmek.  
