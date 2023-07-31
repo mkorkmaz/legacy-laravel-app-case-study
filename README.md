@@ -55,7 +55,7 @@ Bu dokümantasyonu güncelleyerek API'ye şu özelliklerin kazandırmanız bekle
 - Kullanıcı login endpoint'lerini dokümante etmek.
 - Yeni bir döviz kuru tanımlamak, var olanları güncellemek için endpoint'leri dokümante etmek.
 - Var olan bir döviz kuru için ilgili tarihlerdeki değerlerinin girişi, güncellenmesi ve gerektiğinde silinebilmesi için gerekli endpointleri dokümante etmek.
-- Basit bir kur hesaplama entpoint'i oluşturmak.
+- Basit bir kur hesaplama endpoint'i oluşturmak.
 - Dokümantasyonu hazırlarken REST Api Guide'na uygun hareket etmek.
 
 
