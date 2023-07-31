@@ -44,7 +44,7 @@ Bu bağlamda aşağıdaki kurallara göre uygulamayı gözden geçirmeniz, gerek
 - Aksi belirtilmedikçe tüm isimlendirmelerde camelCase kullanılmalıdır.
 - Class, Namespace isimleri PascalCase olmalıdır.
 - Veritabanı, schema, tablo, kolon, index isimleri snake_case olmalıdır.
-- Url parametreleri, konfigürasyon değerleri gibi isimlendirmelerde kebab-case kullanılmalıdır.
+- Url path parametreleri (query ve request body parametreleri değil), konfigürasyon değerleri gibi isimlendirmelerde kebab-case kullanılmalıdır.
 
 ### 2. Openapi dokümantasyonunu düzenlemek [Zorunlu]
 
