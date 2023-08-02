@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::middleware('api.public')
+    ->post('/login', [App\Http\Controllers\User\LoginController::class, 'login']);
+
+Route::middleware('api.public')
+    ->post('/register', [App\Http\Controllers\User\LoginController::class, 'register']);
 
 Route::middleware('api.public')
     ->get('/currencies', [App\Http\Controllers\Currencies\ListCurrenciesController::class, 'getCurrencies']);
