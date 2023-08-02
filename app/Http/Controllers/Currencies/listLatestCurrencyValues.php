@@ -1,12 +1,15 @@
 <?php
+
 declare(strict_types=1);
+
 namespace App\Http\Controllers\Currencies;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Currency;
 use App\Models\CurrencyValue;
-use Illuminate\Support\Collection;
-class listLatestCurrencyValues extends Controller
+
+class ListLatestCurrencyValues extends Controller
 {
     public function __invoke(Request $request, string $currencyCode)
     {
@@ -15,7 +18,7 @@ class listLatestCurrencyValues extends Controller
          * @var $values Collection
          */
         $values = CurrencyValue::select(['logged_at', 'currency_value'])->where('currency_id', $currencyDetails->id)->get();
-        $currency_values = $values->map(static function($value){
+        $currency_values = $values->map(static function ($value) {
             return [
                 'logged_date' => $value['logged_at'],
                 'value' => $value['currency_value']*100
