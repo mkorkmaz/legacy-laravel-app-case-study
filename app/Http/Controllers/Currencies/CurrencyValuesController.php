@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Repositories\CurrencyRepository;
 use App\Repositories\CurrencyValuesRepository;
 
-class ListLatestCurrencyValuesController extends Controller
+class CurrencyValuesController extends Controller
 {
     private $currencyRepository;
     private $currencyValuesRepository;

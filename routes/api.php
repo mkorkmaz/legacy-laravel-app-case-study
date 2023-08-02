@@ -20,7 +20,7 @@ Route::middleware('api.public')
     ->post('/register', [App\Http\Controllers\User\LoginController::class, 'register']);
 
 Route::middleware('api.public')
-    ->get('/currencies', [App\Http\Controllers\Currencies\ListCurrenciesController::class, 'getCurrencies']);
+    ->get('/currencies', [App\Http\Controllers\Currencies\CurrencyController::class, 'getCurrencies']);
 
 Route::middleware('api.public')
-    ->get('/currency-values/{currencyCode}', [App\Http\Controllers\Currencies\ListLatestCurrencyValuesController::class, 'getCurrencyDetails']);
+    ->get('/currency-values/{currencyCode}', [App\Http\Controllers\Currencies\CurrencyValuesController::class, 'getCurrencyDetails']);

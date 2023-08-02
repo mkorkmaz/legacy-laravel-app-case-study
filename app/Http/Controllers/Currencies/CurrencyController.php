@@ -6,10 +6,9 @@ namespace App\Http\Controllers\Currencies;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Currency;
 use App\Repositories\CurrencyRepository;
 
-class ListCurrenciesController extends Controller
+class CurrencyController extends Controller
 {
     private $currencyRepository;
 
