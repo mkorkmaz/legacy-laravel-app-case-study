@@ -6,7 +6,7 @@ info:
     email: mehmet.korkmaz@ready2.gg
   version: 1.0.0
 servers:
-  - url: http://127.0.0.1:8000/api
+  - url: http://legacy-laravel-app-case-study.test/api
     description: Public API Development URL
   - url: https://test.api.legacy-app.com/api
     description: Public API Test URL
@@ -15,6 +15,82 @@ servers:
   - url: https://api.legacy-app.com/api
     description: Public API Production URL
 paths:
+  /login:
+    post:
+      tags:
+        - User
+      summary: Login user
+      description: Returns user information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/vnd.public-api-legacy-app.v1+json:
+              schema:
+                properties:
+                  authorization:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        token:
+                          type: string
+                          format: uuid
+                          example: 5|0dufaossPk4ikWUEgWJU7mc5odvdEt2Z49KXOc3S
+  /register:
+    post:
+      tags:
+        - User
+      summary: Register user
+      description: Register user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/vnd.public-api-legacy-app.v1+json:
+              schema:
+                properties:
+                  registration:
+                    type: string
+                    example: Successfull
+                  user:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: Mehmet
+                        email:
+                          type: string
+                          example: info@ready2.gg
+                        id:
+                          type: integer
+                          example: 1
   /currencies:
     get:
       tags:
@@ -46,7 +122,7 @@ paths:
                         symbol:
                           type: string
                           example: $
-  /currency_values/{currencyCode}:
+  /currency-values/{currencyCode}:
     get:
       tags:
         - Currencies
