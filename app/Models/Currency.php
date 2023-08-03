@@ -10,9 +10,15 @@ class Currency extends Model
     use HasFactory;
     protected $keyType = 'string';
     protected $hidden = [
-        'id',
         'created_at',
         'updated_at',
+
+    ];
+    protected $fillable = [
+        'id',
+        'long_name',
+        'currency_code',
+        'symbol',
         'created_by',
     ];
 }
