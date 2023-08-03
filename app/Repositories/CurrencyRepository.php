@@ -15,7 +15,8 @@ class CurrencyRepository
     public function getCurrencyDetailsWithCurrencyCode(string $currencyCode)
     {
         $currencyDetails = Currency::select(['id', 'long_name', 'currency_code', 'symbol'])->where('currency_code', $currencyCode)->first();
-        return $currencyDetails;
+
+        return $currencyDetails ? $currencyDetails : abort('403', 'Currency Not Found');
     }
 
 }
