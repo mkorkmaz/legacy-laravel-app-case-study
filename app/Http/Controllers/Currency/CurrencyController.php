@@ -33,7 +33,7 @@ class CurrencyController extends Controller
     {
         $currencyValue = CurrencyResource::make($this->currencyCreator->store($request));
 
-        return $this->successResponse($currencyValue, __('currency_value.created_success'));
+        return $this->successResponse($currencyValue, __('currency.created_success'));
 
     }
 }
