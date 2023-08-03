@@ -28,7 +28,7 @@ Route::group(
         Route::get('/currency_values/{code}', [CurrencyValueController::class, 'getCurrencyValueByCurrencyCode']);
         Route::post('/currency_values', [CurrencyValueController::class, 'store']);
         Route::delete('/currency_values/{id}', [CurrencyValueController::class, 'deleteById']);
-        Route::put('/currency_values3/{id}', [CurrencyValueController::class, 'updateById']);
+        Route::put('/currency_values/{id}', [CurrencyValueController::class, 'updateById']);
 
         Route::get('/user', [UserController::class, 'index']);
         Route::post('/user', [UserController::class, 'store']);
