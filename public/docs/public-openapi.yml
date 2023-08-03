@@ -5,6 +5,14 @@ info:
   contact:
     email: mehmet.korkmaz@ready2.gg
   version: 1.0.0
+components:
+  securitySchemes:
+    bearerAuth: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
 servers:
   - url: http://legacy-laravel-app-case-study.test/api
     description: Public API Development URL
@@ -122,6 +130,113 @@ paths:
                         symbol:
                           type: string
                           example: $
+  /currency:
+    post:
+      tags:
+        - Currencies
+      security:
+        - bearerAuth: []
+      summary: New currency
+      description: Create new currency
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                currency_code:
+                  type: string
+                long_name:
+                  type: string
+                symbol:
+                  type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/vnd.public-api-legacy-app.v1+json:
+              schema:
+                properties:
+                  currency:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        currency_code:
+                          type: string
+                          example: USD
+                        long_name:
+                          type: string
+                          example: Amerikan Doları
+                        symbol:
+                          type: string
+                          example: $
+        401:
+          description: Unauthenticated
+          content:
+            application/vnd.public-api-legacy-app.v1+json:
+              schema:
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /currency/{currencyCode}:
+    put:
+      tags:
+        - Currencies
+      security:
+        - bearerAuth: []
+      summary: Update currency
+      description: Update a currency
+      parameters:
+        - in: path
+          name: currencyCode
+          schema:
+            type: string
+          required: true
+          description: Currency 3-char code
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                long_name:
+                  type: string
+                symbol:
+                  type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/vnd.public-api-legacy-app.v1+json:
+              schema:
+                properties:
+                  currency:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        currency_code:
+                          type: string
+                          example: USD
+                        long_name:
+                          type: string
+                          example: Amerikan Doları
+                        symbol:
+                          type: string
+                          example: $
+        401:
+          description: Unauthenticated
+          content:
+            application/vnd.public-api-legacy-app.v1+json:
+              schema:
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
   /currency-values/{currencyCode}:
     get:
       tags:
