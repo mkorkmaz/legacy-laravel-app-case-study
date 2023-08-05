@@ -45,10 +45,10 @@ class CurrencyValuesController extends Controller
         $currencyValues = $currencyValuesService->createCurrencyValue($currencyDetails, $request);
 
 
-        return response()->json(['data' => [
-            'currency-details' => $currencyDetails,
+        return response()->json([
+            'currency' => $currencyDetails,
             'value' => $currencyValues
-        ]], 200);
+        ], 200);
 
     }
 
