@@ -25,6 +25,9 @@ Route::middleware('api.public')
 Route::middleware('api.public')
     ->get('/currency-values/{currencyCode}', [App\Http\Controllers\Currencies\CurrencyValuesController::class, 'getCurrencyDetails']);
 
+Route::middleware('api.public')
+    ->get('exchange', [App\Http\Controllers\Exchange\ExchangeController::class,'exchange']);
+
 Route::group(['middleware' => ['auth:sanctum','api.public']], function ($route) {
     $route->post('/currency', [App\Http\Controllers\Currencies\CurrencyController::class, 'storeCurrency']);
     $route->put('/currency/{currencyCode}', [App\Http\Controllers\Currencies\CurrencyController::class, 'updateCurrency']);

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Currency;
+use App\Models\CurrencyValue;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -59,6 +60,21 @@ class CurrencyService
         }
 
         return $currency;
+    }
+
+    public function calculateExchangeRate(Request $request, Currency $currency)
+    {
+        $currencyValue = CurrencyValue::select(['currency_value'])->where('currency_id', $currency->id)->orderBy('logged_at', 'desc')->first();
+
+        if(!$currencyValue) {
+            abort('403', 'Currency Value Not Found');
+        }
+
+        $rate = $currencyValue['currency_value'];
+
+        $exchangeValue = $rate * $request->amount;
+
+        return $exchangeValue;
     }
 
 }
