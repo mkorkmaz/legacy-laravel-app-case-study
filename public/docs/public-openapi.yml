@@ -342,7 +342,6 @@ paths:
             type: string
           required: true
           description: Currency 3-char code
-
       requestBody:
         required: true
         content:
@@ -396,3 +395,28 @@ paths:
                   message:
                     type: string
                     example: Unauthenticated
+  /exchange:
+    get:
+      tags:
+        - Exchange
+      security:
+        - bearerAuth: []
+      summary: Calculate exchange
+      description: Calculating exchange rate for an amount. No authentication token needed for this action.
+      parameters:
+        - in: query
+          name: currency_code
+          type: string
+        - in: query
+          name: amount
+          type: integer
+      responses:
+        200:
+          description: OK
+          content:
+            application/vnd.public-api-legacy-app.v1+json:
+              schema:
+                properties:
+                  value:
+                    type: number
+                    format: double
