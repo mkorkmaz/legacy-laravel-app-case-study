@@ -5,8 +5,16 @@ info:
   contact:
     email: mehmet.korkmaz@ready2.gg
   version: 1.0.0
+components:
+  securitySchemes:
+    bearerAuth: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
 servers:
-  - url: http://127.0.0.1:8000/api
+  - url: http://legacy-laravel-app-case-study.test/api
     description: Public API Development URL
   - url: https://test.api.legacy-app.com/api
     description: Public API Test URL
@@ -15,12 +23,88 @@ servers:
   - url: https://api.legacy-app.com/api
     description: Public API Production URL
 paths:
+  /login:
+    post:
+      tags:
+        - User
+      summary: Login user
+      description: Returns user information. No authentication token needed for this action.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/vnd.public-api-legacy-app.v1+json:
+              schema:
+                properties:
+                  authorization:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        token:
+                          type: string
+                          format: uuid
+                          example: 5|0dufaossPk4ikWUEgWJU7mc5odvdEt2Z49KXOc3S
+  /register:
+    post:
+      tags:
+        - User
+      summary: Register user
+      description: Register user. No authentication token needed for this action.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/vnd.public-api-legacy-app.v1+json:
+              schema:
+                properties:
+                  registration:
+                    type: string
+                    example: Successfull
+                  user:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: Mehmet
+                        email:
+                          type: string
+                          example: info@ready2.gg
+                        id:
+                          type: integer
+                          example: 1
   /currencies:
     get:
       tags:
         - Currencies
       summary: List currencies
-      description: Returns list of available currencies
+      description: Returns list of available currencies. No authentication token needed for this action.
       responses:
         200:
           description: OK
@@ -46,12 +130,119 @@ paths:
                         symbol:
                           type: string
                           example: $
-  /currency_values/{currencyCode}:
+  /currency:
+    post:
+      tags:
+        - Currencies
+      security:
+        - bearerAuth: []
+      summary: New currency
+      description: Create new currency
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                currency_code:
+                  type: string
+                long_name:
+                  type: string
+                symbol:
+                  type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/vnd.public-api-legacy-app.v1+json:
+              schema:
+                properties:
+                  currency:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        currency_code:
+                          type: string
+                          example: USD
+                        long_name:
+                          type: string
+                          example: Amerikan Doları
+                        symbol:
+                          type: string
+                          example: $
+        401:
+          description: Unauthenticated
+          content:
+            application/vnd.public-api-legacy-app.v1+json:
+              schema:
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /currency/{currencyCode}:
+    put:
+      tags:
+        - Currencies
+      security:
+        - bearerAuth: []
+      summary: Update currency
+      description: Update a currency
+      parameters:
+        - in: path
+          name: currencyCode
+          schema:
+            type: string
+          required: true
+          description: Currency 3-char code
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                long_name:
+                  type: string
+                symbol:
+                  type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/vnd.public-api-legacy-app.v1+json:
+              schema:
+                properties:
+                  currency:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        currency_code:
+                          type: string
+                          example: USD
+                        long_name:
+                          type: string
+                          example: Amerikan Doları
+                        symbol:
+                          type: string
+                          example: $
+        401:
+          description: Unauthenticated
+          content:
+            application/vnd.public-api-legacy-app.v1+json:
+              schema:
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /currency-values/{currencyCode}:
     get:
       tags:
         - Currencies
       summary: Get currency details
-      description: Returns currency details and values
+      description: Returns currency details and values. No authentication token needed for this action.
       parameters:
         - in: path
           name: currencyCode
@@ -93,47 +284,139 @@ paths:
                           format: integer
                           example: 2695.45
         403:
-            description: Not Found
-            content:
-              application/problem+api:
-                schema:
-                  properties:
-                    type:
-                      type: string
-                      format: uri
-                      description: |
-                        An absolute URI that identifies the problem type.  When dereferenced,
-                        it SHOULD provide human-readable documentation for the problem type
-                        (e.g., using HTML).
-                      default: 'about:blank'
-                      example: 'https://zalando.github.io/problem/constraint-violation'
-                    code:
-                      type: string
-                      description: |
-                        Unique string value within the project that can be used to issue's id
-                      examples:
-                        - 'identity-and-access/forbidden'
-                        - 'AUTH-0001'
-                    title:
-                      type: string
-                      description: |
-                        A short, summary of the problem type. Written in english and readable
-                        for engineers (usually not suited for non technical stakeholders and
-                        not localized); example: Service Unavailable
-                    status:
-                      type: integer
-                      format: int32
-                      description: |
-                        The HTTP status code generated by the origin server for this occurrence
-                        of the problem.
-                      minimum: 100
-                      maximum: 600
-                      exclusiveMaximum: true
-                      example: 503
-                    detail:
-                      type: string
-                      description: |
-                        A human readable explanation specific to this occurrence of the
-                        problem.
-                      example: Connection to database timed out
-
+          description: Not Found
+          content:
+            application/problem+api:
+              schema:
+                properties:
+                  type:
+                    type: string
+                    format: uri
+                    description: |
+                      An absolute URI that identifies the problem type.  When dereferenced,
+                      it SHOULD provide human-readable documentation for the problem type
+                      (e.g., using HTML).
+                    default: "about:blank"
+                    example: "https://zalando.github.io/problem/constraint-violation"
+                  code:
+                    type: string
+                    description: |
+                      Unique string value within the project that can be used to issue's id
+                    examples:
+                      - "identity-and-access/forbidden"
+                      - "AUTH-0001"
+                  title:
+                    type: string
+                    description: |
+                      A short, summary of the problem type. Written in english and readable
+                      for engineers (usually not suited for non technical stakeholders and
+                      not localized); example: Service Unavailable
+                  status:
+                    type: integer
+                    format: int32
+                    description: |
+                      The HTTP status code generated by the origin server for this occurrence
+                      of the problem.
+                    minimum: 100
+                    maximum: 600
+                    exclusiveMaximum: true
+                    example: 503
+                  detail:
+                    type: string
+                    description: |
+                      A human readable explanation specific to this occurrence of the
+                      problem.
+                    example: Connection to database timed out
+  /currency-value/{currencyCode}:
+    post:
+      tags:
+        - Currency Values
+      security:
+        - bearerAuth: []
+      summary: New currency value
+      description: Create new currency value
+      parameters:
+        - in: path
+          name: currencyCode
+          schema:
+            type: string
+          required: true
+          description: Currency 3-char code
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                currency_value:
+                  type: integer
+      responses:
+        200:
+          description: OK
+          content:
+            application/vnd.public-api-legacy-app.v1+json:
+              schema:
+                properties:
+                  currency:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        long_name:
+                          type: string
+                          example: Amerikan Doları
+                        currency_code:
+                          type: string
+                          example: USD
+                        symbol:
+                          type: string
+                          example: $
+                  value:
+                    type: array
+                    items:
+                      tyoe: object
+                      properties:
+                        logged_date:
+                          type: string
+                          format: date
+                          example: 2023-07-28
+                        value:
+                          description: Exchange value in TRY in terms of Kuruş. i.e 26.9545 TRY = 2695.45 Kr
+                          type: number
+                          format: integer
+                          example: 2695.45
+        401:
+          description: Unauthenticated
+          content:
+            application/vnd.public-api-legacy-app.v1+json:
+              schema:
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated
+  /exchange:
+    get:
+      tags:
+        - Exchange
+      security:
+        - bearerAuth: []
+      summary: Calculate exchange
+      description: Calculating exchange rate for an amount. No authentication token needed for this action.
+      parameters:
+        - in: query
+          name: currency_code
+          type: string
+        - in: query
+          name: amount
+          type: integer
+      responses:
+        200:
+          description: OK
+          content:
+            application/vnd.public-api-legacy-app.v1+json:
+              schema:
+                properties:
+                  value:
+                    type: number
+                    format: double

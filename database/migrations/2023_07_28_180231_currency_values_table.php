@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class () extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,7 +13,7 @@ return new class extends Migration
         Schema::create('currency_values', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('currency_id');
-            $table->float('currency_value',20, 4, true);
+            $table->float('currency_value', 20, 4, true);
             $table->dateTimeTz('logged_at', 3);
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
