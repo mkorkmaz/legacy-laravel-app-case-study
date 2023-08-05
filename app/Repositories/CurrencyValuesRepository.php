@@ -19,7 +19,7 @@ class CurrencyValuesRepository
         $currencyValues = $values->map(static function ($value) {
             return [
                 'logged_date' => $value['logged_at'],
-                'value' => $value['currency_value']*100
+                'value' => $value['currency_value']
             ];
         });
         return $currencyValues;
