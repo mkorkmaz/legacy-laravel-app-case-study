@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\CurrencyRepository;
 use App\Repositories\CurrencyValuesRepository;
+use App\Services\CurrencyValuesService;
+use Illuminate\Support\Facades\Crypt;
 
 class CurrencyValuesController extends Controller
 {
@@ -31,4 +33,23 @@ class CurrencyValuesController extends Controller
         ]], 200);
 
     }
+
+    public function storeCurrencyValue(Request $request, CurrencyValuesService $currencyValuesService, string $currencyCode)
+    {
+        $request->validate([
+            'currency_value' => 'required|numeric|digits_between:1,6',
+        ]);
+
+        $currencyDetails = $this->currencyRepository->getCurrencyDetailsWithCurrencyCode($currencyCode);
+
+        $currencyValues = $currencyValuesService->createCurrencyValue($currencyDetails, $request);
+
+
+        return response()->json(['data' => [
+            'currency-details' => $currencyDetails,
+            'value' => $currencyValues
+        ]], 200);
+
+    }
+
 }
