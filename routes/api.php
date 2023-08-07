@@ -31,7 +31,7 @@ Route::group(
         Route::put('/currency_values/{id}', [CurrencyValueController::class, 'updateById']);
 
         Route::get('/user', [UserController::class, 'index']);
-        Route::post('/user', [UserController::class, 'store']);
+
 
         Route::get('/currency', [CurrencyController::class, 'index']);
         Route::post('/currency', [CurrencyController::class, 'store']);
@@ -46,5 +46,6 @@ Route::group(
     ],
     function () {
         Route::post('/login', [AuthController::class, 'login']);
+        Route::post('/user', [UserController::class, 'store']);
     }
 );
