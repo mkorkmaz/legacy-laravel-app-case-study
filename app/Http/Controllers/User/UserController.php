@@ -28,7 +28,7 @@ class UserController extends Controller
     {
         $currencyValue = UserResource::make($this->userCreator->store($request));
 
-        return $this->successResponse($currencyValue, __('customer.created_success'));
+        return $this->successResponse($currencyValue, __('user.created_success'));
 
     }
 }
