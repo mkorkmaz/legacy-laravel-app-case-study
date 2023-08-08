@@ -55,13 +55,57 @@ paths:
                     type: array
                     items:
                       type: object
-                     properties:
+                    properties:
                       email:
                         type: string
                         example: emre@gmail.com
                       password:
                         type: string
                         example: emre1234
+ /calculate_currency:
+    get:
+      tags:
+        - Calculate Currency
+      summary: Get Calculate Currency
+      description: method that calculates according to the entered amount and currency
+      parameters:
+        - in: query
+          name: amount
+          schema:
+            type: integer
+          required: true
+          description: Currency 3-char code
+        - in: query
+          name: currency_code
+          schema:
+            type: string
+          required: true
+          description: Currency 3-char code
+      responses:
+        200:
+          description: OK
+          content:
+            application/vnd.public-api-legacy-app.v1+json:
+              schema:
+                properties:
+                  currencies:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          example: 0ea604bb-8f93-4f73-abab-d5e5b50907bd
+                        longName:
+                          type: string
+                          example: Amerikan Doları
+                        code:
+                          type: string
+                          example: USD
+                        symbol:
+                          type: string
+                          example: $
  /currency_values/{id}:
     put:
       tags:
