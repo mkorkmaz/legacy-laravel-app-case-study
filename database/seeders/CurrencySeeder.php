@@ -14,8 +14,7 @@ class CurrencySeeder extends Seeder
     public function run(): void
     {
         DB::table('currencies')->insert([
-            'id' => '11540e34-4cd1-448e-af98-a1b14a5abd44',
-            'currencyCode' => 'USD',
+            'currency_code' => 'USD',
             'long_name' => 'Amerikan Doları',
             'symbol' => '$',
             'created_by' => 1,
@@ -24,8 +23,7 @@ class CurrencySeeder extends Seeder
         ]);
 
         DB::table('currencies')->insert([
-            'id' => 'c961cb13-4d6f-44b1-9c41-c1115359daaa',
-            'currencyCode' => 'EUR',
+            'currency_code' => 'EUR',
             'long_name' => 'Euro',
             'symbol' => '€',
             'created_by' => 1,

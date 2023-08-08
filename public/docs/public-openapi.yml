@@ -14,8 +14,399 @@ servers:
     description: Public API Stage URL
   - url: https://api.legacy-app.com/api
     description: Public API Production URL
+components:
+  securitySchemes:
+    bearerAuth:  # Define the security scheme here
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
+
+
 paths:
-  /currencies:
+ /login:
+    post:
+      tags:
+        - Login
+      summary: Login
+      description: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: johndoe@ready2gg
+                password:
+                  type: string
+                  example: ready2ggPassword
+      responses:
+        200:
+          description: OK
+          content:
+            application/vnd.public-api-legacy-app.v1+json:
+              schema:
+                properties:
+                  currencies:
+                    type: array
+                    items:
+                      type: object
+                    properties:
+                      email:
+                        type: string
+                        example: emre@gmail.com
+                      password:
+                        type: string
+                        example: emre1234
+ /calculate_currency:
+    get:
+      tags:
+        - Calculate Currency
+      summary: Get Calculate Currency
+      description: method that calculates according to the entered amount and currency
+      parameters:
+        - in: query
+          name: amount
+          schema:
+            type: integer
+          required: true
+          description: Currency 3-char code
+        - in: query
+          name: currency_code
+          schema:
+            type: string
+          required: true
+          description: Currency 3-char code
+      responses:
+        200:
+          description: OK
+          content:
+            application/vnd.public-api-legacy-app.v1+json:
+              schema:
+                properties:
+                  currencies:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          example: 0ea604bb-8f93-4f73-abab-d5e5b50907bd
+                        longName:
+                          type: string
+                          example: Amerikan Doları
+                        code:
+                          type: string
+                          example: USD
+                        symbol:
+                          type: string
+                          example: $
+ /currency_values/{id}:
+    put:
+      tags:
+        - Currency Values
+      summary: update currency values by id
+      description: update the entered id if exist
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+          required: true
+          description: Currency 3-char code
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                currency_value:
+                  type: integer
+                  example: 24.68
+                currency_code:
+                  type: string
+                  example: USD
+      responses:
+        200:
+          description: OK
+          content:
+            application/vnd.public-api-legacy-app.v1+json:
+              schema:
+                properties:
+                  currencies:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          example: 0ea604bb-8f93-4f73-abab-d5e5b50907bd
+                        longName:
+                          type: string
+                          example: Amerikan Doları
+                        code:
+                          type: string
+                          example: USD
+                        symbol:
+                          type: string
+                          example: $
+    delete:
+      tags:
+        - Currency Values
+      summary: Delete currency values by id
+      description: Deletes the entered id if exist
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+          required: true
+          description: Currency 3-char code
+      responses:
+        200:
+          description: OK
+          content:
+            application/vnd.public-api-legacy-app.v1+json:
+              schema:
+                properties:
+                  currencies:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          example: 0ea604bb-8f93-4f73-abab-d5e5b50907bd
+                        longName:
+                          type: string
+                          example: Amerikan Doları
+                        code:
+                          type: string
+                          example: USD
+                        symbol:
+                          type: string
+                          example: $
+
+ /currency_values/{code}:
+    get:
+      tags:
+        - Currency Values
+      summary: Get Currency Values
+      description: Get currency values by currency code
+      parameters:
+        - in: path
+          name: code
+          schema:
+            type: string
+          required: true
+          description: Currency 3-char code
+      responses:
+        200:
+          description: OK
+          content:
+            application/vnd.public-api-legacy-app.v1+json:
+              schema:
+                properties:
+                  currencies:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          example: 0ea604bb-8f93-4f73-abab-d5e5b50907bd
+                        longName:
+                          type: string
+                          example: Amerikan Doları
+                        code:
+                          type: string
+                          example: USD
+                        symbol:
+                          type: string
+                          example: $
+ /currency_values:
+    post:
+      tags:
+        - Currency Values
+      summary: Post Currency Values
+      description: Post Currency Values
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                currency_value:
+                  type: integer
+                  example: 24.68
+                currency_code:
+                  type: string
+                  example: USD
+      responses:
+        200:
+          description: OK
+          content:
+            application/vnd.public-api-legacy-app.v1+json:
+              schema:
+                properties:
+                  currencies:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          example: 0ea604bb-8f93-4f73-abab-d5e5b50907bd
+                        longName:
+                          type: string
+                          example: Amerikan Doları
+                        currencyCode:
+                          type: string
+                          example: USD
+                        symbol:
+                          type: string
+                          example: $
+ /user:
+    get:
+      tags:
+        - User
+      summary: List user
+      description: Returns list of available currencies
+      responses:
+        200:
+          description: OK
+          content:
+            application/vnd.public-api-legacy-app.v1+json:
+              schema:
+                properties:
+                  currencies:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          example: 0ea604bb-8f93-4f73-abab-d5e5b50907bd
+                        longName:
+                          type: string
+                          example: Amerikan Doları
+                        currencyCode:
+                          type: string
+                          example: USD
+                        symbol:
+                          type: string
+                          example: $
+    post:
+      tags:
+        - User
+      summary: Post user
+      description: Post user details
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: emre
+                email:
+                  type: string
+                  example: emreertoprak@gmail.com
+                password:
+                  type: string
+                  example: emre1234
+      responses:
+        200:
+          description: OK
+          content:
+            application/vnd.public-api-legacy-app.v1+json:
+              schema:
+                properties:
+                  currency_details:
+                    type: object
+                    properties:
+                      long_name:
+                        type: string
+                        example: Amerikan Doları
+                      currency_code:
+                        type: string
+                        example: USD
+                      symbol:
+                        type: string
+                        example: $
+                  values:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        logged_date:
+                          type: string
+                          format: date
+                          example: 2023-07-28
+                        value:
+                          description: Exchange value in TRY in terms of Kuruş. i.e 26.9545 TRY = 2695.45 Kr
+                          type: number
+                          format: integer
+                          example: 2695.45
+        403:
+            description: Not Found
+            content:
+              application/problem+api:
+                schema:
+                  properties:
+                    type:
+                      type: string
+                      format: uri
+                      description: |
+                        An absolute URI that identifies the problem type.  When dereferenced,
+                        it SHOULD provide human-readable documentation for the problem type
+                        (e.g., using HTML).
+                      default: 'about:blank'
+                      example: 'https://zalando.github.io/problem/constraint-violation'
+                    code:
+                      type: string
+                      description: |
+                        Unique string value within the project that can be used to issue's id
+                      examples:
+                        - 'identity-and-access/forbidden'
+                        - 'AUTH-0001'
+                    title:
+                      type: string
+                      description: |
+                        A short, summary of the problem type. Written in english and readable
+                        for engineers (usually not suited for non technical stakeholders and
+                        not localized); example: Service Unavailable
+                    status:
+                      type: integer
+                      format: int32
+                      description: |
+                        The HTTP status code generated by the origin server for this occurrence
+                        of the problem.
+                      minimum: 100
+                      maximum: 600
+                      exclusiveMaximum: true
+                      example: 503
+                    detail:
+                      type: string
+                      description: |
+                        A human readable explanation specific to this occurrence of the
+                        problem.
+                      example: Connection to database timed out
+ /currency:
     get:
       tags:
         - Currencies
@@ -46,19 +437,27 @@ paths:
                         symbol:
                           type: string
                           example: $
-  /currency_values/{currencyCode}:
-    get:
+    post:
       tags:
         - Currencies
-      summary: Get currency details
-      description: Returns currency details and values
-      parameters:
-        - in: path
-          name: currencyCode
-          schema:
-            type: string
-          required: true
-          description: Currency 3-char code
+      summary: Post currency
+      description: Post currency details
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                long_name:
+                  type: string
+                  example: Amerikan doları
+                currency_code:
+                  type: string
+                  example: USD
+                symbol:
+                  type: string
+                  example: $
       responses:
         200:
           description: OK
@@ -69,10 +468,10 @@ paths:
                   currency_details:
                     type: object
                     properties:
-                      longName:
+                      long_name:
                         type: string
                         example: Amerikan Doları
-                      currencyCode:
+                      currency_code:
                         type: string
                         example: USD
                       symbol:
