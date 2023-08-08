@@ -2,6 +2,7 @@
 
 namespace App\Repositories\CurrencyCalculation;
 
+use App\Exceptions\CurrencyCalculation\CurrencyCalculationException;
 use App\Models\CurrencyValue;
 use App\Repositories\Repository;
 use Illuminate\Http\Request;
@@ -19,6 +20,10 @@ class CurrencyCalculationRepository extends Repository
         $amount = $request->input('amount');
         $code = $request->input('currency_code');
         $latestCurrencyValue = $query->join('currencies', 'currency_values.currency_id', '=', 'currencies.id')->where('currencies.currency_code', $code)->orderBy('currency_values.logged_at', 'desc')->first();
+        if(!$latestCurrencyValue)
+        {
+            throw new CurrencyCalculationException('No value found for the entered currency');
+        }
         $calculatedValue = $latestCurrencyValue->currency_value * $amount;
         return
             [
