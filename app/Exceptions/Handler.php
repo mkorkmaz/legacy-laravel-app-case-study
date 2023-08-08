@@ -99,7 +99,7 @@ class Handler extends ExceptionHandler
             return $this->errorResponse($exception->getMessage(), Response::HTTP_BAD_REQUEST);
         }
 
-            return $this->errorResponse("Something went wrong");
+        return $this->errorResponse($exception->getMessage());
 
     }
 }
